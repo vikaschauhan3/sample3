@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Model Canvas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .canvas-section {
+            padding: 20px;
+            border: 1px solid #A9A9A9;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            flex-grow: 1;
+        }
+
+        .canvas-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .title-icon h3 {
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            padding-bottom: 10px;
+            color: #000;
+        }
+
+        .btn {
+            background-color: #006881;
+            color: white;
+            transition: all 0.2s linear;
+            /* This defines the transition effect */
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background-color: #003f4e;
+            color: white;
+        }
+
+
+        input:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            /* Optional: Also remove any box-shadow applied */
+        }
+
+        textarea {
+            width: 100%;
+            resize: none;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Custom width for first row to ensure equal columns */
+
+        .row-first>div {
+            width: 20%;
+        }
+
+        @media (max-width: 768px) {
+            .canvas-section {
+                margin-bottom: 15px;
+            }
+
+            .row-first>div,
+            .row-second>div {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="canvas-container">
+        <!-- Title Row with 3 columns -->
+        <div class="row my-2">
+            <div class="col-12 col-md-6">
+                <h2>Business Model Canvas</h2>
+            </div>
+            <div class="col-12 col-md-2 mt-2 mt-md-0">
+                <input type="text" class="form-control w-100" id="name" placeholder="Designed By">
+            </div>
+            <div class="col-12 col-md-2 mt-2 mt-md-0">
+                <input type="text" class="form-control w-100" id="Organization" placeholder="Designed For / Organization">
+            </div>
+
+            <div class="col-12 col-md-2 mt-2 mt-md-0">
+                <input type="date" class="form-control w-100" id="Date">
+            </div>
+        </div>
+
+        <!-- First Row with 5 columns (Custom width of 20% for each) -->
+        <div class="row row-first border border-secondary">
+            <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-people-group"></i> Customers</h3>
+                    </div>
+                    <textarea placeholder="Who are the target segment of customers or users?"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-comments"></i> Communication</h3>
+                    </div>
+                    <textarea placeholder="How do you brand? What are the key messages, and how do you engage customers?"></textarea>
+                </div>
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-truck"></i> Channels</h3>
+                    </div>
+                    <textarea placeholder="Which types of distribution channels will be used to reach customers?"></textarea>
+                </div>
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-heart"></i> Relationships</h3>
+                    </div>
+                    <textarea placeholder="What kind of relationship do customers seek with your brand and each other?"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-gift"></i> Value Proposition</h3>
+                    </div>
+                    <textarea placeholder="What benefits do you enable your customers to achieve?"></textarea>
+                </div>
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-cart-shopping"></i> Products & Services</h3>
+                    </div>
+                    <textarea placeholder="What products and services do you bring together for your customers?"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-store"></i> Assets</h3>
+                    </div>
+                    <textarea placeholder="What distinctive assets do you have to use in existing or new ways?"></textarea>
+                </div>
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-industry"></i> Resources</h3>
+                    </div>
+                    <textarea placeholder="What are the main internal resources to create and deliver the offerings?"></textarea>
+                </div>
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-diamond-turn-right"></i> Processes</h3>
+                    </div>
+                    <textarea placeholder="What are the main internal activities to create and deliver the offerings?"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-handshake"></i> Partners</h3>
+                    </div>
+                    <textarea placeholder="Who are the external partners to help us create and deliver the offerings?"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Row with 4 columns -->
+        <div class="row row-second  border border-2 border-secondary">
+            <div class="col-12 col-md-3 d-flex flex-column py-2">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-money-bill-transfer"></i> Revenue Streams</h3>
+                    </div>
+                    <textarea placeholder="What are the main sources of revenue, and which could be largest?"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3 d-flex flex-column py-2">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-tags"></i> Pricing Models</h3>
+                    </div>
+                    <textarea placeholder="How, when, and how often will you charge customers?"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3 d-flex flex-column py-2">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-file-invoice-dollar"></i> Cost Streams</h3>
+                    </div>
+                    <textarea placeholder="What are the most significant ongoing costs to create and deliver the offerings?"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3 d-flex flex-column py-2">
+                <div class="canvas-section">
+                    <div class="title-icon">
+                        <h3><i class="fa-solid fa-money-bill-trend-up"></i> Investments</h3>
+                    </div>
+                    <textarea placeholder="How much do you need to spend before you start earning?"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn" id="downloadPdf">Download PDF</button>
+    </div>
+    <div id="pdf-content"></div>
+
+    <script>
+        // Auto-resize textarea on input
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.style.overflow = 'hidden'; // Hide overflow initially
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = `${this.scrollHeight}px`; // Dynamically adjust height
+            });
+        });
+
+        // PDF generation using html2pdf.js
+        document.getElementById('downloadPdf').addEventListener('click', function() {
+            // Get user input values for "Designed By", "Organization", and "Date"
+            const name = document.getElementById('name').value || "N/A";
+            const organization = document.getElementById('Organization').value || "N/A";
+            const date = document.getElementById('Date').value || "N/A";
+
+            // Extract the text from each textarea
+            const data = {
+                customers: document.querySelector('textarea[placeholder="Who are the target segment of customers or users?"]').value || "N/A",
+                communication: document.querySelector('textarea[placeholder="How do you brand? What are the key messages, and how do you engage customers?"]').value || "N/A",
+                channels: document.querySelector('textarea[placeholder="Which types of distribution channels will be used to reach customers?"]').value || "N/A",
+                relationships: document.querySelector('textarea[placeholder="What kind of relationship do customers seek with your brand and each other?"]').value || "N/A",
+                value: document.querySelector('textarea[placeholder="What benefits do you enable your customers to achieve?"]').value || "N/A",
+                products: document.querySelector('textarea[placeholder="What products and services do you bring together for your customers?"]').value || "N/A",
+                assets: document.querySelector('textarea[placeholder="What distinctive assets do you have to use in existing or new ways?"]').value || "N/A",
+                resources: document.querySelector('textarea[placeholder="What are the main internal resources to create and deliver the offerings?"]').value || "N/A",
+                processes: document.querySelector('textarea[placeholder="What are the main internal activities to create and deliver the offerings?"]').value || "N/A",
+                partners: document.querySelector('textarea[placeholder="Who are the external partners to help us create and deliver the offerings?"]').value || "N/A",
+                revenue: document.querySelector('textarea[placeholder="What are the main sources of revenue, and which could be largest?"]').value || "N/A",
+                pricing: document.querySelector('textarea[placeholder="How, when, and how often will you charge customers?"]').value || "N/A",
+                costs: document.querySelector('textarea[placeholder="What are the most significant ongoing costs to create and deliver the offerings?"]').value || "N/A",
+                investments: document.querySelector('textarea[placeholder="How much do you need to spend before you start earning?"]').value || "N/A",
+            };
+
+            // Create a custom HTML structure for the PDF (following your specified layout)
+            const pdfContent = `
+
+        <style>
+            p {
+                font-size: 13px;
+		page-break-before: avoid;
+		word-break: normal;
+                overflow-wrap: break-word;
+                line-height: 1.5;
+            }
+            h5 {
+                font-size: 15px;
+		font-weight: bold;
+                page-break-after: avoid;
+            }
+            .row {
+                page-break-inside: avoid;
+            }
+        </style>
+
+        <div>
+            <h1>Business Model Canvas</h1>
+            <p><strong>Designed By:</strong> ${name} | <strong>Organization:</strong> ${organization} | <strong>Date:</strong> ${date}</p>
+            <div class="container">
+                <!-- First Row with 5 Columns -->
+                <div class="row row-first border border-secondary">
+                    <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-people-group"></i> Customers</h5>
+                        <p>${data.customers}</p>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-comments"></i> Communication</h5>
+                        <p>${data.communication}</p>
+                        <h5><i class="fa-solid fa-truck"></i> Channels</h5>
+                        <p>${data.channels}</p>
+                        <h5><i class="fa-solid fa-heart"></i> Relationships</h5>
+                        <p>${data.relationships}</p>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-gift"></i> Value Proposition</h5>
+                        <p>${data.value}</p>
+                        <h5><i class="fa-solid fa-cart-shopping"></i> Products & Services</h5>
+                        <p>${data.products}</p>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-store"></i> Assets</h5>
+                        <p>${data.assets}</p>
+                        <h5><i class="fa-solid fa-industry"></i> Resources</h5>
+                        <p>${data.resources}</p>
+                        <h5><i class="fa-solid fa-diamond-turn-right"></i> Processes</h5>
+                        <p>${data.processes}</p>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-handshake"></i> Partners</h5>
+                        <p>${data.partners}</p>
+                    </div>
+                </div>
+
+                <!-- Second Row with 4 Columns -->
+                <div class="row row-second border border-2 border-secondary">
+                    <div class="col-12 col-md-3 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-money-bill-transfer"></i> Revenue Streams</h5>
+                        <p>${data.revenue}</p>
+                    </div>
+                    <div class="col-12 col-md-3 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-tags"></i> Pricing Models</h5>
+                        <p>${data.pricing}</p>
+                    </div>
+                    <div class="col-12 col-md-3 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-file-invoice-dollar"></i> Cost Streams</h5>
+                        <p>${data.costs}</p>
+                    </div>
+                    <div class="col-12 col-md-3 d-flex flex-column py-2 border border-secondary">
+                        <h5><i class="fa-solid fa-money-bill-trend-up"></i> Investments</h5>
+                        <p>${data.investments}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+            // Create a temporary container to store the PDF content
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = pdfContent;
+
+            document.body.appendChild(tempContainer); // Append the content to body (temporary)
+
+            // Set options for html2pdf
+            const opt = {
+                margin: 0.6,
+                filename: 'Business-Model-Canvas.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    unit: 'in',
+                    format: 'a4',
+                    orientation: 'landscape'
+                },
+                pagebreak: {
+                    mode: ['css']
+                }
+            };
+
+            // Generate PDF from the tempContainer
+            html2pdf().from(tempContainer).set(opt).save().then(() => {
+                // Remove the temporary container after PDF generation
+                document.body.removeChild(tempContainer);
+            });
+        });
+    </script>
+</body>
+
+</html>

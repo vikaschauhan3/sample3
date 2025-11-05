@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Story</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <!-- Quill.js CDN links -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+</head>
+
+<style>
+    body {
+        padding: 20px;
+    }
+
+    .container-fluid {
+        width: 100%;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .step {
+        display: none;
+        transition: opacity 0.5s ease;
+    }
+
+    .step.active {
+        display: block;
+    }
+
+    .indicator {
+        align-items: left;
+    }
+
+    .indicator-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: lightgray;
+        text-align: center;
+        line-height: 30px;
+        margin-bottom: 5px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+    .indicator-circle:hover {
+        transform: scale(1.2);
+    }
+
+    .indicator-circle.active {
+        background-color: #007bff;
+        color: white;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        padding-bottom: 10px;
+    }
+
+    p {
+        font-size: 1rem;
+        padding-bottom: 15px;
+    }
+
+    .icon-container {
+        min-height: 80px;
+        padding: 20px;
+    }
+
+    .icon {
+        display: none;
+        opacity: 0.3;
+        transition: opacity 0.5s ease;
+        transform: scale(2, 1);
+    }
+
+    .icon.active {
+        display: inline-block;
+    }
+
+    .icon:hover {
+        transform: scale(4, 2);
+        opacity: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .btn {
+        display: none;
+    }
+
+    .btn.active {
+        display: inline-block;
+    }
+
+    .btn:hover {
+        transform: scale(1.1);
+    }
+
+    .quill-editor {
+        height: 150px;
+    }
+</style>
+
+<body>
+    <div class="container-fluid">
+        <div class="icon-container text-center">
+            <i id="icon-up" class="fa fa-chevron-up icon align-middle" aria-hidden="true" onclick="changeStep(-1)"></i>
+        </div>
+
+        <div class="row">
+            <div class="col-11">
+                <div id="step1" class="step active">
+                    <h3>Step 1: Paint the Picture of the Current Reality</h3>
+                    <p>Begin by describing the present situation in a detailed and relatable way. This establishes the context, highlighting the existing challenges or limitations that are felt by the audience.</p>
+                    <div id="editor1" class="quill-editor"></div>
+                </div>
+                <div id="step2" class="step">
+                    <h3>Step 2: Introduce the First Turning Point</h3>
+                    <p>Introduce a pivotal moment or event that signals the need for change. This turning point emphasizes the urgency and importance of addressing the current issues, inspiring the desire to move toward a better future.</p>
+                    <div id="editor2" class="quill-editor"></div>
+                </div>
+                <div id="step3" class="step">
+                    <h3>Step 3: State What Could Be (Opportunity)</h3>
+                    <p>Present the first vision of a better future, focusing on the potential opportunities. This future state should be inspiring, showing how things can improve dramatically from the current situation.</p>
+                    <div id="editor3" class="quill-editor"></div>
+                </div>
+                <div id="step4" class="step">
+                    <h3>Step 4: Outline What Is (Problem - an Aspect of Step 1)</h3>
+                    <p>Return to an aspect of the current reality to emphasize the problem that still exists. This creates a contrast with the future opportunity, highlighting what needs to be overcome.</p>
+                    <div id="editor4" class="quill-editor"></div>
+                </div>
+                <div id="step5" class="step">
+                    <h3>Step 5: State Another Example of What Could Be (Opportunity)</h3>
+                    <p>Present another vision of the future, showing further opportunities for positive change. This reinforces the idea that transformation is possible and desirable.</p>
+                    <div id="editor5" class="quill-editor"></div>
+                </div>
+                <div id="step6" class="step">
+                    <h3>Step 6: Outline What Is (Problem - Another Aspect of Step 1)</h3>
+                    <p>Highlight another challenge or limitation in the current reality. This builds tension and motivates the audience to recognize the need for change.</p>
+                    <div id="editor6" class="quill-editor"></div>
+                </div>
+                <div id="step7" class="step">
+                    <h3>Step 7: State Another Example of What Could Be (Opportunity)</h3>
+                    <p>Offer a third vision of the future, showcasing more possibilities that align with the desired transformation. This further strengthens the contrast between the present and the future.</p>
+                    <div id="editor7" class="quill-editor"></div>
+                </div>
+                <div id="step8" class="step">
+                    <h3>Step 8: Outline What Is (Problem - Another Aspect of Step 1)</h3>
+                    <p>Bring attention to yet another challenge from the current reality. By now, the contrast between what is and what could be should be very clear and compelling.</p>
+                    <div id="editor8" class="quill-editor"></div>
+                </div>
+                <div id="step9" class="step">
+                    <h3>Step 9: Introduce the Second Turning Point</h3>
+                    <p>Present a second critical moment that calls for immediate action. This turning point emphasizes the steps needed to transition from the present reality to the future vision and sets the stage for the final push toward change.</p>
+                    <div id="editor9" class="quill-editor"></div>
+                </div>
+                <div id="step10" class="step">
+                    <h3>Step 10: End on a Higher Plane</h3>
+                    <p>Conclude with an uplifting message that reassures the audience of the value and importance of the journey ahead. Highlight the potential for success and positive outcomes, encouraging them to commit to the necessary actions to achieve the future vision.</p>
+                    <div id="editor10" class="quill-editor"></div>
+                </div>
+            </div>
+
+
+            <div class="col-1 indicator d-flex align-items-end flex-column pt-5">
+                <div class="indicator-circle active" id="circle1" onclick="jumpToStep(1)">1</div>
+                <div class="indicator-circle" id="circle2" onclick="jumpToStep(2)">2</div>
+                <div class="indicator-circle" id="circle3" onclick="jumpToStep(3)">3</div>
+                <div class="indicator-circle" id="circle4" onclick="jumpToStep(4)">4</div>
+                <div class="indicator-circle" id="circle5" onclick="jumpToStep(5)">5</div>
+                <div class="indicator-circle" id="circle6" onclick="jumpToStep(6)">6</div>
+                <div class="indicator-circle" id="circle7" onclick="jumpToStep(7)">7</div>
+                <div class="indicator-circle" id="circle8" onclick="jumpToStep(8)">8</div>
+                <div class="indicator-circle" id="circle9" onclick="jumpToStep(9)">9</div>
+                <div class="indicator-circle" id="circle10" onclick="jumpToStep(10)">10</div>
+            </div>
+        </div>
+
+        <div class="icon-container text-center">
+            <i id="icon-down" class="fa fa-chevron-down icon align-middle" aria-hidden="true" onclick="changeStep(1)"></i>
+            <button id="downloadBtn" class="btn btn-primary align-middle" onclick="downloadPDF()">Download Future Story</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let quillEditors = []; // Move quillEditors outside of the DOMContentLoaded function
+
+        function changeStep(direction) {
+            updateStep(currentStep + direction);
+        }
+
+        function jumpToStep(stepNumber) {
+            updateStep(stepNumber);
+        }
+
+        function updateStep(newStep) {
+            // Remove active class from current step and circle
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`circle${currentStep}`).classList.remove('active');
+
+            // Update the current step
+            currentStep = Math.min(Math.max(newStep, 1), 10);
+
+            // Show or hide the navigation buttons
+            document.getElementById('icon-up').classList.toggle('active', currentStep > 1);
+            document.getElementById('icon-down').classList.toggle('active', currentStep < 10);
+            document.getElementById('downloadBtn').classList.toggle('active', currentStep === 10);
+
+            // Add active class to the new step and corresponding circle
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.getElementById(`circle${currentStep}`).classList.add('active');
+        }
+
+        // Initialize Quill.js editors and set the initial step
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 10; i++) {
+                quillEditors[i] = new Quill(`#editor${i}`, {
+                    theme: 'snow'
+                });
+            }
+
+            // Set the initial step when the page loads
+            updateStep(1); // Ensures the correct icons are shown when the page is loaded
+        });
+
+        function replaceHeadingsInQuillContent(editorContent) {
+            // Create a temporary DOM element to hold the HTML content
+            const tempElement = document.createElement('div');
+            tempElement.innerHTML = editorContent;
+
+            // Replace all <h1> with <h3>
+            const h1Elements = tempElement.querySelectorAll('h1');
+            h1Elements.forEach(h1 => {
+                const newH3 = document.createElement('h3');
+                newH3.innerHTML = h1.innerHTML;
+                h1.replaceWith(newH3);
+            });
+
+            // Replace all <h2> with <h4>
+            const h2Elements = tempElement.querySelectorAll('h2');
+            h2Elements.forEach(h2 => {
+                const newH4 = document.createElement('h4');
+                newH4.innerHTML = h2.innerHTML;
+                h2.replaceWith(newH4);
+            });
+
+            // Replace all <h3> with <h5>
+            const h3Elements = tempElement.querySelectorAll('h3');
+            h3Elements.forEach(h3 => {
+                const newH5 = document.createElement('h5');
+                newH5.innerHTML = h3.innerHTML;
+                h3.replaceWith(newH5);
+            });
+
+            // Return the modified HTML content
+            return tempElement.innerHTML;
+        }
+
+        function downloadPDF() {
+            const content = document.createElement('div');
+
+            // Add the title (H1)
+            const title = document.createElement('h1');
+            title.textContent = 'Future Story for Your Business';
+            title.style.fontSize = '28px'; // Largest font size for H1
+            title.style.fontWeight = 'bold'; // Bold for H1
+            content.appendChild(title);
+
+            // Add description paragraph
+            const description = document.createElement('p');
+            description.textContent = 'This is a summary of your future story. Below are the steps you worked through.';
+            description.style.fontSize = '16px'; // Normal text font size (set explicitly)
+            description.style.marginBottom = '10px'; // Reduced space after paragraph
+            content.appendChild(description);
+
+            for (let i = 1; i <= 10; i++) {
+                const stepSection = document.createElement('div');
+                stepSection.style.marginBottom = '15px';
+                stepSection.style.pageBreakInside = 'avoid'; // Ensure the section stays together
+
+                // Add step title (H2)
+                const stepTitle = document.createElement('h2');
+                const originalTitle = document.querySelector(`#step${i} h3`).textContent;
+                stepTitle.textContent = originalTitle;
+                stepTitle.style.fontSize = '24px'; // H2 slightly smaller than H1
+                stepTitle.style.fontWeight = 'bold'; // Bold for H2
+                stepSection.appendChild(stepTitle);
+
+                // Add faded hr line under the title
+                const fadedHr = document.createElement('hr');
+                fadedHr.style.border = '0';
+                fadedHr.style.borderTop = '1px solid rgba(0, 0, 0, 0.8)';
+                fadedHr.style.marginTop = '5px';
+                fadedHr.style.marginBottom = '10px';
+                stepSection.appendChild(fadedHr);
+
+                // Check if Quill editor for the step is empty
+                const editorContent = quillEditors[i].root.innerHTML.trim();
+                if (editorContent === '<p><br></p>' || editorContent === '') {
+                    // If editor content is empty, display the message
+                    const emptyMessage = document.createElement('p');
+                    emptyMessage.textContent = 'There is no information entered for this step.';
+                    emptyMessage.style.fontStyle = 'italic';
+                    emptyMessage.style.color = '#888'; // Light gray text to indicate it's a placeholder
+                    stepSection.appendChild(emptyMessage);
+                } else {
+
+                    // Replace headings inside Quill content and style them
+                    const quillContent = document.createElement('div');
+                    quillContent.innerHTML = replaceHeadingsInQuillContent(quillEditors[i].root.innerHTML);
+
+                    // Set styles for headings inside the Quill content
+                    const h3Elements = quillContent.querySelectorAll('h3');
+                    h3Elements.forEach(h3 => {
+                        h3.style.fontSize = '22px'; // H3 size
+                        h3.style.fontWeight = 'bold'; // Bold for H3
+                    });
+
+                    const h4Elements = quillContent.querySelectorAll('h4');
+                    h4Elements.forEach(h4 => {
+                        h4.style.fontSize = '20px'; // H4 size
+                        h4.style.fontWeight = 'bold'; // Bold for H4
+                    });
+
+                    const h5Elements = quillContent.querySelectorAll('h5');
+                    h5Elements.forEach(h5 => {
+                        h5.style.fontSize = '18px'; // H5 size, same as normal text but bold
+                        h5.style.fontWeight = 'bold'; // Bold for H5
+                    });
+
+                    // Reduced space after paragraphs inside Quill content
+                    const pElements = quillContent.querySelectorAll('p');
+                    pElements.forEach(p => {
+                        p.style.marginBottom = '5px'; // Reduce space between paragraphs
+                    });
+
+                    stepSection.appendChild(quillContent);
+                }
+                content.appendChild(stepSection);
+            }
+
+            html2pdf()
+                .from(content)
+                .set({
+                    margin: [22, 15, 22, 15], // Margins for PDF (top, left, bottom, right)
+                    filename: 'Future_Story.pdf',
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait'
+                    },
+                    pagebreak: {
+                        avoid: ['h2', 'p', 'hr'], // Prevent breaking before H2 unless necessary
+                        mode: ['css', 'avoid-all']
+                    }
+                })
+                .save();
+        }
+    </script>
+</body>
+
+</html>

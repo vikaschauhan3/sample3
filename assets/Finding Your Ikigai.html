@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- (head content remains the same) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Ikigai</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.17/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        /* (style content remains mostly the same with minor adjustments for consistency) */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 100%;
+        }
+
+        .section {
+            margin-top: 20px;
+        }
+
+        .section-enhanced {
+            background-color: #f2f1f1;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 300px;
+        }
+
+        .card {
+            min-height: 200px;
+        }
+
+        h4 {
+            text-align: center;
+        }
+
+        .btn-custom {
+            background-color: #006881;
+            color: #FFFFFF;
+            margin-top: 15px;
+        }
+
+        .btn-custom:hover {
+            background-color: #005368;
+            color: #FFFFFF;
+        }
+
+        .list-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .list-group-item {
+            font-size: 16px;
+            color: #333;
+            background-color: #ebebeb;
+            border: 1px solid #000;
+            border-radius: 5px;
+        }
+
+        /* Hide Sections 4 and 5 initially */
+        #section4,
+        #section5 {
+            display: none;
+        }
+
+        /* Center the navigation icons */
+        .nav-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .nav-icon {
+            cursor: pointer;
+            font-size: 24px;
+            color: #006881;
+        }
+
+        .nav-icon:hover {
+            color: #005368;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Section 1: Introduction -->
+        <section class="section">
+            <h2 class="text-center fw-bold" style="color: #000;">Finding Your Ikigai</h2>
+            <p class="text-center text-muted">Reflect and identify activities that matter to you. Enter items in the text box below, and for each item, select one or more of the four pillars of Ikigai that apply to the activity. This exercise requires a thoughtful approach to each area of your personal or professional life, framed by what you’re good at, what you love, what provides value to you, and what provides value to others.</p>
+        </section>
+
+        <!-- Section 2: Input Form -->
+        <hr>
+        <section class="section">
+            <form id="inputForm">
+                <div class="mb-3">
+                    <label for="statement" class="form-label fw-bold">Type your statement here:</label>
+                    <input type="text" id="statement" class="form-control" placeholder="Enter Text..." required>
+                </div>
+                <div class="mb-3 fw-bold">
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-4 row-cols-lg-4">
+                        <div class="col">
+                            <label class="form-check form-check-inline">
+                                <input class="border border-dark form-check-input" type="checkbox" value="love" id="love">
+                                Something I Love
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-check form-check-inline">
+                                <input class="border border-dark form-check-input" type="checkbox" value="good" id="good">
+                                Something I Am Good At
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-check form-check-inline">
+                                <input class="border border-dark form-check-input" type="checkbox" value="paid" id="paid">
+                                Something I Can Be Paid For
+                            </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-check form-check-inline">
+                                <input class="border border-dark form-check-input" type="checkbox" value="world" id="world">
+                                Something the World Needs
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-custom px-5 fw-bold">Submit</button>
+            </form>
+        </section>
+        <hr>
+
+	<div class="section-enhanced">
+        <!-- Section 3: Primary Lists -->
+        <section id="section3" class="section">
+	<h3 class="text-center fw-bold" style="color: #000;">Core Pillars</h3>
+<p class="text-center">These are the foundational elements of Ikigai — What You Love, What You Are Good At, What You Can Be Paid For, and What the World Needs. Reflect on each pillar to identify activities and values that resonate with you.</p>
+            <div class="row row-cols-1 row-cols-md-4">
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    	<h4 class="list-title">Something I Love</h4>
+                    	<ul id="loveList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title">Something I Am Good At</h4>
+                    <ul id="goodList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title">Something I Can Be Paid For</h4>
+                    <ul id="paidList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title">Something the World Needs</h4>
+                    <ul id="worldList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Ikigai Lists (Passion, Profession, Vocation, Mission) -->
+        <section id="section4" class="section">
+	<h3 class="text-center fw-bold" style="color: #000;">Ikigai Intersections</h3>
+<p class="text-center">These intersections represent where two pillars meet, forming areas of passion, vocation, profession, and mission. Exploring these can help you discover fulfilling paths that integrate different aspects of your life.</p>
+            <div class="row row-cols-1 row-cols-md-4">
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title">Passion</h4>
+                    <ul id="passionList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title">Profession</h4>
+                    <ul id="professionList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title">Vocation</h4>
+                    <ul id="vocationList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title">Mission</h4>
+                    <ul id="missionList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Additional Lists (Vertical) -->
+        <section id="section5" class="section">
+            <h3 class="text-center fw-bold" style="color: #000;">Emotional States</h3>
+<p class="text-center">These emotional states emerge when some pillars are present, but others are missing. They reflect potential feelings like satisfaction, emptiness, uncertainty, or fullness, guiding you toward a balanced Ikigai.</p>
+            <div class="row row-cols-1 row-cols-md-4">
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title" style="min-height: 85px;">Satisfaction, but a Feeling of Uselessness</h4>
+                    <ul id="satisfactionList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title" style="min-height: 85px;">Comfortable, but a Feeling of Emptiness</h4>
+                    <ul id="comfortList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title" style="min-height: 85px;">Excitement and Complacency, but a Sense of Uncertainty</h4>
+                    <ul id="excitementList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+                <div class="col">
+		    <div class="card" style="height: 100%;">
+                    <h4 class="list-title" style="min-height: 85px;">Delight and Fulfillment, but Lack of Wealth</h4>
+                    <ul id="delightList" class="list-group p-3"></ul>
+		    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Navigation Icons for Section Switching -->
+        <div class="nav-icons">
+            <i class="fas fa-arrow-left nav-icon" onclick="navigateSection(-1)"></i>
+            <i class="fas fa-arrow-right nav-icon" onclick="navigateSection(1)"></i>
+        </div>
+
+	</div>
+
+<hr>
+
+        <!-- New Section: Your Ikigai -->
+        <section id="sectionIkigai" class="section">
+            <h3 class="text-center fw-bold" style="color: #000;">Your Ikigai</h3>
+            <p class="text-center">This is the heart of your Ikigai—where what you love, what you are good at, what you can be paid for, and what the world needs all intersect. The activities listed here represent your unique purpose.</p>
+            <div class="p-2 border border-dark" style="min-height: 100px;">
+		<ul id="ikigaiList" class="list-group p-3"></ul>
+		<p id="ikigaiMessage" class="fw-bold text-center px-2" style="color: #006881;">You have not found your Ikigai yet. If you cannot uncover something that aligns with all four core pillars, there may be a misalignment between your Ikigai and your current work or personal life. Think about what you can do today to move a little closer to your sense of purpose and challenge yourself to take small, bold steps to find your Ikigai.</p>
+	    </div>
+        </section>
+
+    </div>
+
+<!-- PDF Download Button -->
+<div class="text-center mt-4">
+    <button class="btn btn-custom fw-bold" onclick="generatePDF()">Download PDF</button>
+</div>
+
+
+    <script>
+// Function to toggle between Section 3, 4, and 5
+let currentSection = 3;
+
+function navigateSection(direction) {
+    // Hide current section
+    document.getElementById(`section${currentSection}`).style.display = 'none';
+
+    // Update currentSection based on direction
+    currentSection += direction;
+
+    // Loop around if out of bounds
+    if (currentSection < 3) currentSection = 5;
+    if (currentSection > 5) currentSection = 3;
+
+    // Show the new section
+    document.getElementById(`section${currentSection}`).style.display = 'block';
+}
+
+// Form submission to add items to lists
+document.getElementById("inputForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const statement = document.getElementById("statement").value;
+    const categories = {
+        love: document.getElementById("love").checked,
+        good: document.getElementById("good").checked,
+        paid: document.getElementById("paid").checked,
+        world: document.getElementById("world").checked,
+    };
+
+    // Check if at least one category is selected
+    const isAnyCategorySelected = categories.love || categories.good || categories.paid || categories.world;
+    if (!isAnyCategorySelected) {
+        alert("Please select at least one category for your statement.");
+        return; // Prevent form submission if no category is selected
+    }
+
+    // Primary Lists
+    if (categories.love) addToList("loveList", statement);
+    if (categories.good) addToList("goodList", statement);
+    if (categories.paid) addToList("paidList", statement);
+    if (categories.world) addToList("worldList", statement);
+
+    // Ikigai Lists
+    if (categories.love && categories.good) addToList("passionList", statement);
+    if (categories.good && categories.paid) addToList("professionList", statement);
+    if (categories.paid && categories.world) addToList("vocationList", statement);
+    if (categories.love && categories.world) addToList("missionList", statement);
+
+    // Emotional State Lists
+    const allCategoriesSelected = categories.love && categories.good && categories.paid && categories.world;
+    if (!allCategoriesSelected) {
+        if (categories.love && categories.good && categories.paid) addToList("satisfactionList", statement);
+        if (categories.good && categories.paid && categories.world) addToList("comfortList", statement);
+        if (categories.paid && categories.world && categories.love) addToList("excitementList", statement);
+        if (categories.world && categories.love && categories.good) addToList("delightList", statement);
+    } else {
+        addToList("ikigaiList", statement); // Add to Ikigai List if all four are selected
+    }
+
+    // Reset input fields
+    document.getElementById("statement").value = "";
+    Object.keys(categories).forEach(key => document.getElementById(key).checked = false);
+});
+
+// Function to toggle the "Your Ikigai" message visibility
+function toggleIkigaiMessage() {
+    const ikigaiList = document.getElementById("ikigaiList");
+    const ikigaiMessage = document.getElementById("ikigaiMessage");
+
+    // Show message if list is empty, otherwise hide it
+    ikigaiMessage.style.display = ikigaiList.children.length === 0 ? "block" : "none";
+}
+
+// Modify addToList function to call toggleIkigaiMessage
+function addToList(listId, text) {
+    const listItem = document.createElement("li");
+    listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+    listItem.textContent = text;
+
+    if (["loveList", "goodList", "paidList", "worldList"].includes(listId)) {
+        const deleteIcon = document.createElement("i");
+        deleteIcon.className = "fas fa-trash-alt text-danger ms-2";
+        deleteIcon.style.cursor = "pointer";
+        deleteIcon.onclick = function () {
+            deleteItem(listId, text); // Call delete function
+        };
+
+        listItem.appendChild(deleteIcon);
+    }
+
+    document.getElementById(listId).appendChild(listItem);
+
+    // Call toggleIkigaiMessage after adding to the ikigaiList
+    if (listId === "ikigaiList") toggleIkigaiMessage();
+}
+
+// Function to delete an item and update all dependent lists
+function deleteItem(listId, text) {
+    const list = document.getElementById(listId);
+    Array.from(list.children).forEach(item => {
+        if (item.textContent.trim() === text) {
+            item.remove();
+        }
+    });
+
+    // Update all lists and toggle message visibility
+    updateAllLists();
+    toggleIkigaiMessage(); // Check ikigai message visibility after deletion
+}
+
+function updateAllLists() {
+    // Clear all dependent lists to prevent duplicates
+    document.getElementById("passionList").innerHTML = "";
+    document.getElementById("professionList").innerHTML = "";
+    document.getElementById("vocationList").innerHTML = "";
+    document.getElementById("missionList").innerHTML = "";
+    document.getElementById("satisfactionList").innerHTML = "";
+    document.getElementById("comfortList").innerHTML = "";
+    document.getElementById("excitementList").innerHTML = "";
+    document.getElementById("delightList").innerHTML = "";
+    document.getElementById("ikigaiList").innerHTML = "";
+
+    // Reprocess all items in core pillars to re-add to relevant lists
+    ["loveList", "goodList", "paidList", "worldList"].forEach(pillar => {
+        Array.from(document.getElementById(pillar).children).forEach(item => {
+            const statement = item.textContent.trim();
+            processItem(statement);
+        });
+    });
+}
+
+function processItem(statement) {
+    // First, remove any existing instance of the item in all lists to avoid duplicates
+    removeItemFromAllLists(statement);
+
+    // Retrieve which categories the item currently belongs to in the core pillars
+    const categories = {
+        love: Array.from(document.getElementById("loveList").children).some(li => li.textContent.trim() === statement),
+        good: Array.from(document.getElementById("goodList").children).some(li => li.textContent.trim() === statement),
+        paid: Array.from(document.getElementById("paidList").children).some(li => li.textContent.trim() === statement),
+        world: Array.from(document.getElementById("worldList").children).some(li => li.textContent.trim() === statement),
+    };
+
+    // Add to Ikigai Intersection Lists
+    if (categories.love && categories.good) addToList("passionList", statement);
+    if (categories.good && categories.paid) addToList("professionList", statement);
+    if (categories.paid && categories.world) addToList("vocationList", statement);
+    if (categories.love && categories.world) addToList("missionList", statement);
+
+    // Add to Emotional State Lists (only if not all four are selected)
+    const allCategoriesSelected = categories.love && categories.good && categories.paid && categories.world;
+    if (!allCategoriesSelected) {
+        if (categories.love && categories.good && categories.paid) addToList("satisfactionList", statement);
+        if (categories.good && categories.paid && categories.world) addToList("comfortList", statement);
+        if (categories.paid && categories.world && categories.love) addToList("excitementList", statement);
+        if (categories.world && categories.love && categories.good) addToList("delightList", statement);
+    } else {
+        // Add to "Your Ikigai" if all four are selected
+        addToList("ikigaiList", statement);
+    }
+}
+
+function removeItemFromAllLists(statement) {
+    // Define all dependent lists
+    const lists = [
+        "passionList", "professionList", "vocationList", "missionList",
+        "satisfactionList", "comfortList", "excitementList", "delightList",
+        "ikigaiList"
+    ];
+
+    // Loop through each list and remove any items that match the statement
+    lists.forEach(listId => {
+        const list = document.getElementById(listId);
+        Array.from(list.children).forEach(item => {
+            if (item.textContent.trim() === statement) {
+                item.remove();
+            }
+        });
+    });
+}
+
+// PDF Generation Function
+function generatePDF() {
+    // Create a new jsPDF instance
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Set margins
+    const leftMargin = 15;
+    const rightMargin = 15;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    // Title
+    doc.setFontSize(22);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Finding Your Ikigai', pageWidth / 2, 20, { align: 'center' });
+
+    // Description
+    doc.setFontSize(12);
+    doc.setTextColor(50, 50, 50);
+    doc.text('This document is a summary of your journey in finding your Ikigai.', leftMargin, 30);
+
+    // Add "Your Ikigai" section
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Your Ikigai', leftMargin, 45);
+
+    // Description for "Your Ikigai" section
+    doc.setFontSize(12);
+    doc.setTextColor(50, 50, 50);
+    const ikigaiDescription = 'This is the heart of your Ikigai—where what you love, what you are good at, what you can be paid for, and what the world needs all intersect. The activities listed here represent your unique purpose.';
+    const ikigaiDescriptionLines = doc.splitTextToSize(ikigaiDescription, pageWidth - leftMargin - rightMargin);
+    doc.text(ikigaiDescriptionLines, leftMargin, 55);
+
+    let currentY = 50 + ikigaiDescriptionLines.length * 7 + 5;
+
+    // Define border dimensions
+    const borderX = leftMargin;
+    const borderY = currentY;
+    const borderWidth = pageWidth - leftMargin - rightMargin;
+    let borderHeight = 10;
+
+    doc.setCharSpace(0);
+
+    // Check if there are items in ikigaiList
+    const ikigaiItems = getListItems('ikigaiList');
+    if (ikigaiItems.length > 0 && ikigaiItems[0] !== 'No items added.') {
+        // List the items
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold"); // Set font style to bold
+        doc.setTextColor(50, 50, 50);
+        ikigaiItems.forEach((item, index) => {
+            doc.text(`- ${item}`, leftMargin + 3, currentY + (index + 1) * 7);
+        });
+        borderHeight += ikigaiItems.length * 7 + 3;
+    } else {
+        // Show the general message
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold"); // Set font style to bold
+        doc.setTextColor(50, 50, 50);
+        const noIkigaiMessage = 'You have not found your Ikigai yet. Keep reflecting and making changes to find your purpose.';
+        const noIkigaiMessageLines = doc.splitTextToSize(noIkigaiMessage, pageWidth - leftMargin - rightMargin);
+        doc.text(noIkigaiMessageLines, leftMargin + 3, currentY + 10);
+        borderHeight += noIkigaiMessageLines.length * 3 + 5;
+    }
+
+    // Draw border around "Your Ikigai" section
+    doc.setDrawColor(0, 0, 0); // Border color (black)
+    doc.rect(borderX, borderY, borderWidth, borderHeight, 'S');
+
+    currentY += borderHeight + 10; // Update Y position after the bordered section
+
+    // Add separation before the following sections
+    doc.setLineWidth(0.5);
+    doc.line(leftMargin, currentY, pageWidth - rightMargin, currentY);
+    currentY += 10;
+
+    // Sections to include
+    const sections = [
+        {
+            title: 'Core Pillars',
+            description: 'These are the foundational elements of Ikigai—What You Love, What You Are Good At, What You Can Be Paid For, and What the World Needs.',
+            data: [
+                { title: 'Something I Love', items: getListItems('loveList') },
+                { title: 'Something I Am Good At', items: getListItems('goodList') },
+                { title: 'Something I Can Be Paid For', items: getListItems('paidList') },
+                { title: 'Something the World Needs', items: getListItems('worldList') },
+            ],
+        },
+        {
+            title: 'Ikigai Intersections',
+            description: 'These intersections represent where two pillars meet, forming areas of passion, vocation, profession, and mission.',
+            data: [
+                { title: 'Passion', items: getListItems('passionList') },
+                { title: 'Profession', items: getListItems('professionList') },
+                { title: 'Vocation', items: getListItems('vocationList') },
+                { title: 'Mission', items: getListItems('missionList') },
+            ],
+        },
+        {
+            title: 'Emotional States',
+            description: 'These emotional states emerge when some pillars are present, but others are missing.',
+            data: [
+                { title: 'Satisfaction, but a Feeling of Uselessness', items: getListItems('satisfactionList') },
+                { title: 'Comfortable, but a Feeling of Emptiness', items: getListItems('comfortList') },
+                { title: 'Excitement and Complacency, but a Sense of Uncertainty', items: getListItems('excitementList') },
+                { title: 'Delight and Fulfillment, but Lack of Wealth', items: getListItems('delightList') },
+            ],
+        },
+    ];
+
+
+    // Loop through each section
+sections.forEach(section => {
+    const sectionTitleHeight = 10; // Height for section title
+    const descriptionLines = doc.splitTextToSize(section.description, pageWidth - leftMargin - rightMargin);
+    const descriptionHeight = descriptionLines.length * 7;
+    const estimatedTableHeight = 40; // Estimated height for table; adjust if needed
+
+    // Total estimated height for section
+    const sectionTotalHeight = sectionTitleHeight + descriptionHeight + estimatedTableHeight;
+
+    // Check if the current Y position + total section height would overflow the page
+    if (currentY + sectionTotalHeight > doc.internal.pageSize.getHeight() - 20) {
+        doc.addPage();
+        currentY = 20;
+    }
+
+    // Add section title
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.text(section.title, leftMargin, currentY);
+    currentY += sectionTitleHeight;
+
+    // Add section description
+    doc.setFontSize(12);
+    doc.setTextColor(50, 50, 50);
+    doc.text(descriptionLines, leftMargin, currentY);
+    currentY += descriptionHeight + 5;
+
+    // Prepare table data
+    const headers = section.data.map(item => item.title);
+    const bodyData = transposeData(section.data.map(item => item.items));
+
+    // Add table using autoTable, starting from currentY
+    doc.autoTable({
+        startY: currentY,
+        head: [headers],
+        body: bodyData,
+        styles: { cellPadding: 3, fontSize: 10 },
+        theme: 'grid',
+        margin: { left: leftMargin, right: rightMargin },
+        headStyles: {
+            fillColor: [0, 104, 129], // RGB for #006881
+            textColor: [255, 255, 255]
+        },
+        didDrawPage: function (data) {
+            currentY = data.cursor.y + 10;
+        },
+    });
+
+    // Update currentY after table
+    currentY = doc.lastAutoTable.finalY + 20;
+});
+
+    // Save the PDF
+    doc.save('Finding_Your_Ikigai.pdf');
+}
+
+// Helper function to get list items
+function getListItems(listId) {
+    const list = document.getElementById(listId);
+    const items = [];
+    for (let i = 0; i < list.children.length; i++) {
+        const text = list.children[i].textContent.trim();
+        // Remove delete icon text if present
+        const cleanText = text.replace('delete', '').trim();
+        items.push(cleanText);
+    }
+    if (items.length === 0) {
+        items.push('No items added.');
+    }
+    return items;
+}
+
+// Helper function to transpose data for autoTable
+function transposeData(arrays) {
+    const maxLength = Math.max(...arrays.map(arr => arr.length));
+    const transposed = [];
+    for (let i = 0; i < maxLength; i++) {
+        const row = [];
+        for (let j = 0; j < arrays.length; j++) {
+            row.push(arrays[j][i] || '');
+        }
+        transposed.push(row);
+    }
+    return transposed;
+}
+
+
+    </script>
+</body>
+
+</html>

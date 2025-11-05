@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Catalyst</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            width: 250px;
+            height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card-front {
+            color: white;
+            background-color: #f8f9fa;
+        }
+
+        .card-front h4 {
+            font-size: 40px;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .card-front p {
+            font-size: 18px;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .card-back {
+            background-color: #2c3e50;
+            text-align: left;
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-back p {
+            padding: 10px;
+        }
+
+        .card-front input[type="checkbox"],
+        .card-back input[type="checkbox"] {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .reflection-section {
+            background-color: white;
+            padding: 20px 40px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .reflection-section .reflection-goal {
+            Text-align: left;
+            margin-bottom: 20px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .reflection-goal {
+            page-break-inside: avoid;
+        }
+
+        .reflection-goal,
+        .unselected-goal-card {
+            page-break-inside: avoid;
+        }
+
+        .slider-container {
+
+            display: flex;
+            align-items: left;
+        }
+
+        .slider-container label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .slider-container .slider-value {
+            width: 40px;
+            text-align: left;
+        }
+
+        .notes {
+            width: 95%;
+            padding: 10px 10px 0 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #2c3e50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #1a252f;
+        }
+
+        /* Style adjustments to prevent page breaks inside reflections */
+
+        .reflection-goal {
+            page-break-inside: avoid;
+        }
+
+        /* Style for the grid of unselected goals */
+
+        .unselected-goals-grid {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .unselected-goal-card {
+            width: 200px;
+            height: 100px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Sustainable Catalyst</h1>
+    <p style="font-size: 20px; font-weight: bold;">Reflect on the impact of your organization on the 17 SGD goals and select the goals that you believe your organization has a contribution in.</p>
+
+
+    <div class="card-container">
+        <!-- Flip cards for the 17 SDG goals -->
+        <div class="card" id="card-1">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #e5233d;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-1-front">
+                    <h4>1</h4>
+                    <p>No Poverty</p>
+                </div>
+                <div class="card-back" style="background-color: #e5233d;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-1-back">
+                    <p>End poverty in all its forms everywhere</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-2">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #dda73a;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-2-front">
+                    <h4>2</h4>
+                    <p>Zero Hunger</p>
+                </div>
+                <div class="card-back" style="background-color: #dda73a;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-2-back">
+                    <p>End hunger, achieve food security and improved nutrition</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-3">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #4c9f38;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-3-front">
+                    <h4>3</h4>
+                    <p>Good Health and Well-being</p>
+                </div>
+                <div class="card-back" style="background-color: #4c9f38;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-3-back">
+                    <p>Ensure healthy lives and promote well-being for all at all ages</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-4">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #c5192d;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-4-front">
+                    <h4>4</h4>
+                    <p>Quality Education</p>
+                </div>
+                <div class="card-back" style="background-color: #c5192d;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-4-back">
+                    <p>Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-5">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #ff3a21;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-5-front">
+                    <h4>5</h4>
+                    <p>Gender Equality</p>
+                </div>
+                <div class="card-back" style="background-color: #ff3a21;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-5-back">
+                    <p>Achieve gender equality and empower all women and girls</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-6">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #26bde2;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-6-front">
+                    <h4>6</h4>
+                    <p>Clean Water and Sanitation</p>
+                </div>
+                <div class="card-back" style="background-color: #26bde2;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-6-back">
+                    <p>Ensure availability and sustainable management of water and sanitation for all</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-7">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #fcc30b;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-7-front">
+                    <h4>7</h4>
+                    <p>Affordable and Clean Energy</p>
+                </div>
+                <div class="card-back" style="background-color: #fcc30b;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-7-back">
+                    <p>Ensure access to affordable, reliable, sustainable and modern energy for all</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-8">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #a21942;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-8-front">
+                    <h4>8</h4>
+                    <p>Decent Work and Economic Growth</p>
+                </div>
+                <div class="card-back" style="background-color: #a21942;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-8-back">
+                    <p>Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-9">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #fd6925;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-9-front">
+                    <h4>9</h4>
+                    <p>Industry, Innovation and Infrastructure</p>
+                </div>
+                <div class="card-back" style="background-color: #fd6925;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-9-back">
+                    <p>Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-10">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #dd1367;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-10-front">
+                    <h4>10</h4>
+                    <p>Reduced Inequalities</p>
+                </div>
+                <div class="card-back" style="background-color: #dd1367;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-10-back">
+                    <p>Reduce inequality within and among countries</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-11">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #fd9d24;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-11-front">
+                    <h4>11</h4>
+                    <p>Sustainable Cities and Communities</p>
+                </div>
+                <div class="card-back" style="background-color: #fd9d24;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-11-back">
+                    <p>Make cities and human settlements inclusive, safe, resilient and sustainable</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-12">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #bf8b2e;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-12-front">
+                    <h4>12</h4>
+                    <p>Responsible Consumption and Production</p>
+                </div>
+                <div class="card-back" style="background-color: #bf8b2e;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-12-back">
+                    <p>Ensure sustainable consumption and production patterns</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-13">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #3f7e44;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-13-front">
+                    <h4>13</h4>
+                    <p>Climate Action</p>
+                </div>
+                <div class="card-back" style="background-color: #3f7e44;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-13-back">
+                    <p>Take urgent action to combat climate change and its impacts</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-14">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #0a97d9;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-14-front">
+                    <h4>14</h4>
+                    <p>Life Below Water</p>
+                </div>
+                <div class="card-back" style="background-color: #0a97d9;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-14-back">
+                    <p>Conserve and sustainably use the oceans, seas and marine resources for sustainable development</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-15">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #56c02b;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-15-front">
+                    <h4>15</h4>
+                    <p>Life on Land</p>
+                </div>
+                <div class="card-back" style="background-color: #56c02b;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-15-back">
+                    <p>Protect, restore and promote sustainable use of terrestrial ecosystems, manage forests sustainably, combat desertification, halt and reverse land degradation and halt biodiversity loss</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-16">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #00689d;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-16-front">
+                    <h4>16</h4>
+                    <p>Peace, Justice and Strong Institutions</p>
+                </div>
+                <div class="card-back" style="background-color: #00689d;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-16-back">
+                    <p>Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-17">
+            <div class="card-inner">
+                <div class="card-front" style="background-color: #19486a;">
+                    <input type="checkbox" class="checkbox-front" id="checkbox-17-front">
+                    <h4>17</h4>
+                    <p>Partnerships for the Goals</p>
+                </div>
+                <div class="card-back" style="background-color: #19486a;">
+                    <input type="checkbox" class="checkbox-back" id="checkbox-17-back">
+                    <p>Strengthen the means of implementation and revitalize the global partnership for sustainable development</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Reflection section -->
+    <div id="reflectionSection" class="reflection-section" style="display: none;">
+        <h2 style="text-align: center;">Your Reflections</h2>
+        <p style="text-align: center;">Assess the degree of impact you think your organization is having in these areas and reflect on what it is doing well and what it can improve on and how.</p>
+
+        <div id="reflectionGoalsContainer"></div>
+
+        <!-- Add Download Button -->
+        <button id="downloadBtn" class="btn" style="display: none; margin-top: 20px;">Download Summary</button>
+    </div>
+
+    <script>
+        let selectedGoals = 0;
+
+        // Function to toggle the reflection area for a goal
+        function toggleGoal(goalNumber, goalTitle, goalDescription) {
+            const reflectionSection = document.getElementById('reflectionSection');
+            const reflectionGoalsContainer = document.getElementById('reflectionGoalsContainer');
+            const existingGoal = document.getElementById('goal-' + goalNumber);
+
+            if (!existingGoal) {
+                const reflectionGoal = document.createElement('div');
+                reflectionGoal.id = 'goal-' + goalNumber;
+                reflectionGoal.classList.add('reflection-goal');
+
+                reflectionGoal.innerHTML = `
+            <h3>${goalTitle}</h3>
+            <p>${goalDescription}</p>
+            <div class="slider-container">
+                <label style="font-weight:bold;">Impact Level: </label>
+                <input type="range" min="0" max="100" value="0" oninput="updateSliderValue(this)">
+                <span class="slider-value">0%</span>
+            </div>
+            <textarea class="notes" placeholder="Enter your reflections here..." oninput="adjustTextarea(this)"></textarea>
+        `;
+
+                reflectionGoalsContainer.appendChild(reflectionGoal);
+                selectedGoals++;
+
+            } else {
+                reflectionGoalsContainer.removeChild(existingGoal);
+                selectedGoals--;
+            }
+
+            // Show or hide the reflection section and download button
+            reflectionSection.style.display = selectedGoals > 0 ? 'block' : 'none';
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.style.display = selectedGoals > 0 ? 'inline-block' : 'none';
+        }
+
+        // Function to update the slider value next to the range input
+        function updateSliderValue(slider) {
+            const value = slider.value;
+            const sliderValueElement = slider.nextElementSibling;
+            sliderValueElement.innerHTML = `${value}%`;
+        }
+
+        // Function to adjust textarea height based on content
+        function adjustTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+        }
+
+        // Function to sync the state of checkboxes between the front and back of the card
+        function syncCheckboxes(frontCheckboxId, backCheckboxId) {
+            const frontCheckbox = document.getElementById(frontCheckboxId);
+            const backCheckbox = document.getElementById(backCheckboxId);
+
+            // Sync the front and back checkboxes
+            frontCheckbox.addEventListener('change', () => {
+                backCheckbox.checked = frontCheckbox.checked;
+            });
+
+            backCheckbox.addEventListener('change', () => {
+                frontCheckbox.checked = backCheckbox.checked;
+            });
+        }
+
+        // Function to handle card click, including checkbox, and toggle both reflection and checkbox state
+        function addCardClickListener(cardId, goalNumber, goalTitle, goalDescription) {
+            const card = document.getElementById(cardId);
+            const frontCheckbox = document.getElementById(`checkbox-${goalNumber}-front`);
+            const backCheckbox = document.getElementById(`checkbox-${goalNumber}-back`);
+
+            card.addEventListener('click', () => {
+                // Toggle checkbox state
+                const isChecked = !frontCheckbox.checked;
+                frontCheckbox.checked = isChecked;
+                backCheckbox.checked = isChecked;
+
+                // Toggle reflection
+                toggleGoal(goalNumber, goalTitle, goalDescription);
+            });
+        }
+
+        // Syncing checkboxes for each card
+        syncCheckboxes('checkbox-1-front', 'checkbox-1-back');
+        syncCheckboxes('checkbox-2-front', 'checkbox-2-back');
+        syncCheckboxes('checkbox-3-front', 'checkbox-3-back');
+        syncCheckboxes('checkbox-4-front', 'checkbox-4-back');
+        syncCheckboxes('checkbox-5-front', 'checkbox-5-back');
+        syncCheckboxes('checkbox-6-front', 'checkbox-6-back');
+        syncCheckboxes('checkbox-7-front', 'checkbox-7-back');
+        syncCheckboxes('checkbox-8-front', 'checkbox-8-back');
+        syncCheckboxes('checkbox-9-front', 'checkbox-9-back');
+        syncCheckboxes('checkbox-10-front', 'checkbox-10-back');
+        syncCheckboxes('checkbox-11-front', 'checkbox-11-back');
+        syncCheckboxes('checkbox-12-front', 'checkbox-12-back');
+        syncCheckboxes('checkbox-13-front', 'checkbox-13-back');
+        syncCheckboxes('checkbox-14-front', 'checkbox-14-back');
+        syncCheckboxes('checkbox-15-front', 'checkbox-15-back');
+        syncCheckboxes('checkbox-16-front', 'checkbox-16-back');
+        syncCheckboxes('checkbox-17-front', 'checkbox-17-back');
+
+        // Adding click listeners for each card
+        addCardClickListener('card-1', 1, 'No Poverty', 'End poverty in all its forms everywhere');
+        addCardClickListener('card-2', 2, 'Zero Hunger', 'End hunger, achieve food security and improved nutrition');
+        addCardClickListener('card-3', 3, 'Good Health and Well-being', 'Ensure healthy lives and promote well-being for all at all ages');
+        addCardClickListener('card-4', 4, 'Quality Education', 'Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all');
+        addCardClickListener('card-5', 5, 'Gender Equality', 'Achieve gender equality and empower all women and girls');
+        addCardClickListener('card-6', 6, 'Clean Water and Sanitation', 'Ensure availability and sustainable management of water and sanitation for all');
+        addCardClickListener('card-7', 7, 'Affordable and Clean Energy', 'Ensure access to affordable, reliable, sustainable and modern energy for all');
+        addCardClickListener('card-8', 8, 'Decent Work and Economic Growth', 'Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all');
+        addCardClickListener('card-9', 9, 'Industry, Innovation and Infrastructure', 'Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation');
+        addCardClickListener('card-10', 10, 'Reduced Inequalities', 'Reduce inequality within and among countries');
+        addCardClickListener('card-11', 11, 'Sustainable Cities and Communities', 'Make cities and human settlements inclusive, safe, resilient and sustainable');
+        addCardClickListener('card-12', 12, 'Responsible Consumption and Production', 'Ensure sustainable consumption and production patterns');
+        addCardClickListener('card-13', 13, 'Climate Action', 'Take urgent action to combat climate change and its impacts');
+        addCardClickListener('card-14', 14, 'Life Below Water', 'Conserve and sustainably use the oceans, seas and marine resources for sustainable development');
+        addCardClickListener('card-15', 15, 'Life on Land', 'Protect, restore and promote sustainable use of terrestrial ecosystems, manage forests sustainably, combat desertification, halt and reverse land degradation and halt biodiversity loss');
+        addCardClickListener('card-16', 16, 'Peace, Justice and Strong Institutions', 'Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels');
+        addCardClickListener('card-17', 17, 'Partnerships for the Goals', 'Strengthen the means of implementation and revitalize the global partnership for sustainable development');
+        // Add event listener for the Download button
+        document.getElementById('downloadBtn').addEventListener('click', downloadSummary);
+
+        function downloadSummary() {
+            // Create a container for the PDF content
+            const pdfContent = document.createElement('div');
+            pdfContent.style.padding = '20px';
+            pdfContent.style.textAlign = 'left'; // Set text alignment to left
+
+            // Title
+            const title = document.createElement('h1');
+            title.textContent = 'Sustainability Goals Reflection';
+
+            pdfContent.appendChild(title);
+
+            // Introductory Text
+            const introText = document.createElement('p');
+            introText.textContent = 'This report summarizes your insights on how your organization contributes to the Sustainable Development Goals (SDGs). Reflect on your current impact and consider strategies to enhance your contributions.';
+            pdfContent.appendChild(introText);
+
+            // 4. Reflection Goals
+            const reflections = document.createElement('div');
+            const reflectionGoals = document.querySelectorAll('.reflection-goal');
+
+            if (reflectionGoals.length > 0) {
+                reflectionGoals.forEach(goal => {
+                    const clonedGoal = goal.cloneNode(true);
+                    // Remove event listeners to prevent any interaction in the PDF
+                    clonedGoal.querySelectorAll('*').forEach(el => el.oninput = null);
+
+                    // Apply inline styles to preserve appearance
+                    clonedGoal.style.backgroundColor = '#f4f4f4';
+                    clonedGoal.style.padding = '20px';
+                    clonedGoal.style.borderRadius = '5px';
+                    clonedGoal.style.marginBottom = '20px';
+                    clonedGoal.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+                    clonedGoal.style.pageBreakInside = 'avoid';
+
+                    // Adjust styles for headings and text
+                    const h3 = clonedGoal.querySelector('h3');
+                    h3.style.fontSize = '1.5em';
+                    h3.style.marginBottom = '10px';
+
+                    const p = clonedGoal.querySelector('p');
+                    p.style.marginBottom = '10px';
+
+                    // Adjust slider styles
+                    const sliderContainer = clonedGoal.querySelector('.slider-container');
+                    sliderContainer.style.display = 'flex';
+                    sliderContainer.style.alignItems = 'center';
+
+                    const label = sliderContainer.querySelector('label');
+                    label.style.marginRight = '10px';
+
+                    if (sliderContainer) {
+                        const slider = sliderContainer.querySelector('input[type="range"]');
+                        const sliderValue = slider.value; // Get current value of the slider
+
+                        // Remove the range input
+                        slider.remove();
+
+                        // Create a new div styled as a progress bar
+                        const progressBar = document.createElement('div');
+                        progressBar.style.flex = '1';
+                        progressBar.style.marginRight = '10px';
+
+                        progressBar.style.height = '10px';
+                        progressBar.style.backgroundColor = '#e0e0e0';
+                        progressBar.style.borderRadius = '5px';
+                        progressBar.style.position = 'relative';
+
+                        // Create an inner div to show the progress (based on slider value)
+                        const progress = document.createElement('div');
+                        progress.style.width = sliderValue + '%'; // Set width based on slider value
+                        progress.style.height = '100%';
+                        progress.style.backgroundColor = '#4caf50'; // Progress color (green)
+                        progress.style.borderRadius = '5px';
+
+                        progressBar.appendChild(progress);
+                        sliderContainer.appendChild(progressBar);
+                    }
+
+                    const sliderValue = sliderContainer.querySelector('.slider-value');
+                    sliderValue.style.width = '40px';
+
+                    // Adjust textarea styles
+                    const textarea = clonedGoal.querySelector('.notes');
+                    textarea.style.width = '100%';
+                    textarea.style.padding = '10px';
+                    textarea.style.border = '1px solid #ccc';
+                    textarea.style.borderRadius = '5px';
+                    textarea.style.resize = 'none';
+
+                    reflections.appendChild(clonedGoal);
+                });
+
+                pdfContent.appendChild(reflections);
+            }
+
+            // 5. Subtitle
+            const subtitle = document.createElement('h2');
+            subtitle.textContent = 'Considerations for Increasing Impact';
+            subtitle.classList.add('break-before-considerations'); // Use this class
+            subtitle.style.marginTop = '30px';
+            pdfContent.appendChild(subtitle);
+
+            const subtitleText = document.createElement('p');
+            subtitleText.textContent = 'To further advance sustainability, explore how you can enhance your organization\'s practices to maximize the impact on the selected goals. Also, consider the following goals that might align with your organizational influence.';
+
+            pdfContent.appendChild(subtitleText);
+
+            pdfContent.appendChild(subtitleText);
+
+            // 6. Unselected Goals Grid
+            const unselectedGoalsGrid = document.createElement('div');
+            unselectedGoalsGrid.classList.add('unselected-goals-grid');
+
+            // Get all goals
+            const allGoals = [{
+                    number: 1,
+                    title: 'No Poverty',
+                    color: '#e5233d'
+                },
+                {
+                    number: 2,
+                    title: 'Zero Hunger',
+                    color: '#dda73a'
+                },
+                {
+                    number: 3,
+                    title: 'Good Health and Well-being',
+                    color: '#4c9f38'
+                },
+                {
+                    number: 4,
+                    title: 'Quality Education',
+                    color: '#c5192d'
+                },
+                {
+                    number: 5,
+                    title: 'Gender Equality',
+                    color: '#ff3a21'
+                },
+                {
+                    number: 6,
+                    title: 'Clean Water and Sanitation',
+                    color: '#26bde2'
+                },
+                {
+                    number: 7,
+                    title: 'Affordable and Clean Energy',
+                    color: '#fcc30b'
+                },
+                {
+                    number: 8,
+                    title: 'Decent Work and Economic Growth',
+                    color: '#a21942'
+                },
+                {
+                    number: 9,
+                    title: 'Industry, Innovation and Infrastructure',
+                    color: '#fd6925'
+                },
+                {
+                    number: 10,
+                    title: 'Reduced Inequalities',
+                    color: '#dd1367'
+                },
+                {
+                    number: 11,
+                    title: 'Sustainable Cities and Communities',
+                    color: '#fd9d24'
+                },
+                {
+                    number: 12,
+                    title: 'Responsible Consumption and Production',
+                    color: '#bf8b2e'
+                },
+                {
+                    number: 13,
+                    title: 'Climate Action',
+                    color: '#3f7e44'
+                },
+                {
+                    number: 14,
+                    title: 'Life Below Water',
+                    color: '#0a97d9'
+                },
+                {
+                    number: 15,
+                    title: 'Life on Land',
+                    color: '#56c02b'
+                },
+                {
+                    number: 16,
+                    title: 'Peace, Justice and Strong Institutions',
+                    color: '#00689d'
+                },
+                {
+                    number: 17,
+                    title: 'Partnerships for the Goals',
+                    color: '#19486a'
+                },
+            ];
+
+            // Get selected goals
+            const selectedGoalNumbers = Array.from(document.querySelectorAll('.reflection-goal')).map(goal => parseInt(goal.id.split('-')[1]));
+
+            // Create a grid container
+            const gridContainer = document.createElement('div');
+            gridContainer.style.display = 'flex';
+            gridContainer.style.flexWrap = 'wrap';
+            gridContainer.style.justifyContent = 'center';
+            gridContainer.style.gap = '20px';
+            gridContainer.style.marginTop = '20px';
+
+            // Create cards for all goals
+            allGoals.forEach(goal => {
+                const card = document.createElement('div');
+                card.style.width = '150px';
+                card.style.height = '120px';
+                card.style.backgroundColor = goal.color;
+                card.style.display = 'flex';
+                card.style.flexDirection = 'column';
+                card.style.alignItems = 'center';
+                card.style.justifyContent = 'center';
+                card.style.color = '#fff';
+                card.style.borderRadius = '5px';
+                card.style.pageBreakInside = 'avoid';
+
+                // Fade out selected goals
+                if (selectedGoalNumbers.includes(goal.number)) {
+                    card.style.opacity = '0.5'; // Fade effect
+                }
+
+                // Card content
+                const goalNumber = document.createElement('h4');
+                goalNumber.textContent = goal.number;
+                goalNumber.style.fontSize = '30px';
+                goalNumber.style.margin = '0';
+
+                const goalTitle = document.createElement('p');
+                goalTitle.textContent = goal.title;
+                goalTitle.style.fontSize = '18px';
+                goalTitle.style.textAlign = 'center';
+                goalTitle.style.margin = '10px';
+
+                card.appendChild(goalNumber);
+                card.appendChild(goalTitle);
+                gridContainer.appendChild(card);
+            });
+
+            pdfContent.appendChild(gridContainer);
+
+            // 7. Set html2pdf options
+            const opt = {
+                margin: [0.5, 0.5, 0.5, 0.5], // Margins in inches
+                filename: 'Sustainability_Goals_Reflection.pdf',
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true
+                },
+                jsPDF: {
+                    unit: 'in',
+                    format: 'letter',
+                    orientation: 'portrait'
+                },
+                pagebreak: {
+                    mode: ['css', 'legacy'], // Use both CSS and legacy mode for page breaks
+                    avoid: ['.reflection-goal'], // Avoid page breaks inside reflection goals
+                    before: '.break-before-considerations' // Only force break before this class
+                }
+            };
+
+            // 8. Generate and save the PDF
+            html2pdf().from(pdfContent).set(opt).save();
+        }
+    </script>
+
+</body>
+
+</html>
